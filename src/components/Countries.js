@@ -4,10 +4,28 @@ import {
   Toolbar,
   Grid,
   Card,
-  CardMedia,
+  //CardMedia,
   CardContent,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { useQuery, gql } from "@apollo/client";
+
+const ALL_COUNTRIES = gql`
+  query AllCountries {
+    Country(first: 5) {
+      name
+      _id
+      capital
+      nameTranslations(filter: { languageCode: "br" }) {
+        value
+      }
+      flag {
+        svgFile
+      }
+    }
+  }
+`;
 
 const useStyles = makeStyles({
   countriesContainer: {
@@ -19,7 +37,7 @@ const useStyles = makeStyles({
 
 const getCountryCard = () => {
   return (
-    <Grid item xs={12} sm={4}>
+    <Grid item xs={12} sm={3}>
       <Card>
         <CardContent>Oi xD</CardContent>
       </Card>
@@ -29,6 +47,11 @@ const getCountryCard = () => {
 
 const Countries = () => {
   const classes = useStyles();
+
+  const { loading, error, data } = useQuery(ALL_COUNTRIES);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Erro!...</p>;
 
   return (
     <>
@@ -43,9 +66,9 @@ const Countries = () => {
         className={classes.countriesContainer}
       >
         {getCountryCard()}
-        {getCountryCard()}
-        {getCountryCard()}
-        {getCountryCard()}
+        {data.Country.map((country) => (
+          <p key={country._id}>{country.nameTranslations[0].value}</p>
+        ))}
       </Grid>
     </>
   );
