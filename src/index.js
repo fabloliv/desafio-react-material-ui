@@ -12,11 +12,13 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 
+const cache = new InMemoryCache();
+
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
   link: new HttpLink({
     uri: "https://countries-274616.ew.r.appspot.com",
   }),
+  cache,
 });
 
 const history = createBrowserHistory();

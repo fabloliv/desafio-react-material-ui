@@ -1,19 +1,21 @@
-import React from "react";
 import {
   AppBar,
   Toolbar,
   Grid,
   Card,
-  //CardMedia,
+  CardMedia,
   CardContent,
+  CircularProgress,
+  Typography,
 } from "@material-ui/core";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useQuery, gql } from "@apollo/client";
 
 const ALL_COUNTRIES = gql`
   query AllCountries {
-    Country(first: 5) {
+    Country(first: 10) {
       name
       _id
       capital
@@ -33,24 +35,22 @@ const useStyles = makeStyles({
     paddingLeft: "50px",
     paddingRight: "50px",
   },
+  cardMedia: {
+    margin: "auto",
+  },
+  cardContent: {
+    textAlign: "center",
+  },
 });
 
-const getCountryCard = () => {
-  return (
-    <Grid item xs={12} sm={3}>
-      <Card>
-        <CardContent>Oi xD</CardContent>
-      </Card>
-    </Grid>
-  );
-};
+const Countries = (props) => {
+  const { history } = props;
 
-const Countries = () => {
   const classes = useStyles();
 
   const { loading, error, data } = useQuery(ALL_COUNTRIES);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
   if (error) return <p>Erro!...</p>;
 
   return (
@@ -65,9 +65,24 @@ const Countries = () => {
         justify="center"
         className={classes.countriesContainer}
       >
-        {getCountryCard()}
+        {/*getCountryCard()*/}
+
         {data.Country.map((country) => (
-          <p key={country._id}>{country.nameTranslations[0].value}</p>
+          <Grid item xs={12} sm={3} key={country._id}>
+            <Card onClick={() => history.push(`/${country._id}`)}>
+              <CardMedia
+                classname={classes.cardMedia}
+                image={country.flag.svgFile}
+                style={{
+                  width: "100%",
+                  height: "200px",
+                }}
+              />
+              <CardContent className={classes.cardContent}>
+                <Typography>{country.nameTranslations[0].value}</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
       </Grid>
     </>
