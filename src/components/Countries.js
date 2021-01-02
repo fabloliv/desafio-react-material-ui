@@ -7,6 +7,7 @@ import {
   CardContent,
   CircularProgress,
   Typography,
+  CardActionArea,
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,6 +16,9 @@ import { GET_ALL_COUNTRIES } from "../queries";
 import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
   countriesContainer: {
     paddingTop: "20px",
     paddingLeft: "50px",
@@ -25,6 +29,9 @@ const useStyles = makeStyles({
   },
   cardContent: {
     textAlign: "center",
+  },
+  capital: {
+    fontSize: 14,
   },
 });
 
@@ -59,18 +66,29 @@ const Countries = (props) => {
 
         {data.Country.map((country) => (
           <Grid item xs={12} sm={3} key={country._id}>
-            <Card onClick={() => history.push(`/${country._id}`)}>
-              <CardMedia
-                classname={classes.cardMedia}
-                image={country.flag.svgFile}
-                style={{
-                  width: "100%",
-                  height: "200px",
-                }}
-              />
-              <CardContent className={classes.cardContent}>
-                <Typography>{country.nameTranslations[0].value}</Typography>
-              </CardContent>
+            <Card
+              className={classes.root}
+              onClick={() => history.push(`/${country._id}`)}
+            >
+              <CardActionArea>
+                <CardMedia
+                  className={classes.cardMedia}
+                  component="img"
+                  alt={`Bandeira de ${country.nameTranslations[0].value}`}
+                  height="140"
+                  image={country.flag.svgFile}
+                  title={country.name}
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom={false} variant="h6" component="h2">
+                    {country.nameTranslations[0].value}
+                  </Typography>
+
+                  <Typography className={classes.capital} color="textSecondary">
+                    {country.capital}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
             </Card>
           </Grid>
         ))}
