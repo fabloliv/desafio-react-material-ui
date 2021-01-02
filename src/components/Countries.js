@@ -10,24 +10,9 @@ import {
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { GET_ALL_COUNTRIES } from "../queries";
 
-import { useQuery, gql } from "@apollo/client";
-
-const ALL_COUNTRIES = gql`
-  query AllCountries {
-    Country(first: 10) {
-      name
-      _id
-      capital
-      nameTranslations(filter: { languageCode: "br" }) {
-        value
-      }
-      flag {
-        svgFile
-      }
-    }
-  }
-`;
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles({
   countriesContainer: {
@@ -46,9 +31,14 @@ const useStyles = makeStyles({
 const Countries = (props) => {
   const { history } = props;
 
+  // test
+  let first = 15;
+
   const classes = useStyles();
 
-  const { loading, error, data } = useQuery(ALL_COUNTRIES);
+  const { loading, error, data } = useQuery(GET_ALL_COUNTRIES, {
+    variables: { first },
+  });
 
   if (loading) return <CircularProgress />;
   if (error) return <p>Erro!...</p>;
