@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { GET_ALL_COUNTRIES } from "../queries";
+import { GET_ALL_COUNTRIES } from "../graphql";
 
 import { useQuery } from "@apollo/client";
 import Header from "./Header";
@@ -64,7 +64,7 @@ const Countries = (props) => {
         alignItems="center"
         className={classes.countriesContainer}
       >
-        {data.Country.map((country) => (
+        {data?.Country?.map((country) => (
           <Grid item xs={12} sm={6} md={3} key={country._id}>
             <Card className={classes.root}>
               <CardActionArea onClick={() => history.push(`/${country._id}`)}>

@@ -22,6 +22,11 @@ export const GET_COUNTRY = gql`
       _id
       name
       capital
+      area
+      population
+      topLevelDomains {
+        name
+      }
       nameTranslations(filter: { languageCode: "br" }) {
         value
       }
