@@ -1,6 +1,4 @@
 import {
-  AppBar,
-  Toolbar,
   Grid,
   Card,
   CardMedia,
@@ -14,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { GET_ALL_COUNTRIES } from "../queries";
 
 import { useQuery } from "@apollo/client";
+import Header from "./Header";
 
 const useStyles = makeStyles({
   root: {
@@ -21,8 +20,8 @@ const useStyles = makeStyles({
   },
   countriesContainer: {
     paddingTop: "20px",
-    paddingLeft: "50px",
-    paddingRight: "50px",
+    paddingLeft: "40px",
+    paddingRight: "40px",
   },
   cardMedia: {
     margin: "auto",
@@ -48,29 +47,27 @@ const Countries = (props) => {
   });
 
   if (loading) return <CircularProgress />;
-  if (error) return <p>Erro!...</p>;
+  if (error) return `Error! ${error.message}`;
 
   return (
     <>
-      <AppBar position="static">
-        <Toolbar></Toolbar>
-      </AppBar>
+      <Header title="Países" />
+
+      {/* gera lista de países */}
+      {/* <ListCountries data={data} /> */}
 
       <Grid
         container
         spacing={2}
+        direction="row"
         justify="center"
+        alignItems="center"
         className={classes.countriesContainer}
       >
-        {/*getCountryCard()*/}
-
         {data.Country.map((country) => (
-          <Grid item xs={12} sm={3} key={country._id}>
-            <Card
-              className={classes.root}
-              onClick={() => history.push(`/${country._id}`)}
-            >
-              <CardActionArea>
+          <Grid item xs={12} sm={6} md={3} key={country._id}>
+            <Card className={classes.root}>
+              <CardActionArea onClick={() => history.push(`/${country._id}`)}>
                 <CardMedia
                   className={classes.cardMedia}
                   component="img"
