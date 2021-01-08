@@ -13,6 +13,7 @@ import { GET_ALL_COUNTRIES } from "../graphql";
 
 import { useQuery } from "@apollo/client";
 import Header from "./Header";
+import Footer from "./Footer";
 
 const useStyles = makeStyles({
   root: {
@@ -90,6 +91,7 @@ const Countries = (props) => {
           </Grid>
         ))}
       </Grid>
+      <Footer />
     </>
   );
 };
