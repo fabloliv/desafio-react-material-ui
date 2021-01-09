@@ -2,17 +2,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import GitHubIcon from "@material-ui/icons/GitHub";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
       <Link
+        display="block"
+        variant="body1"
         color="inherit"
+        title="Repositório no GitHub"
         href="https://github.com/fabloliv/desafio-react-material-ui"
       >
-        GitHub
-      </Link>{" "}
+        <GitHubIcon />
+      </Link>
+      {"Copyright © "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
