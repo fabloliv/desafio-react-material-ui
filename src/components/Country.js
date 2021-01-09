@@ -1,6 +1,7 @@
 import {
   Button,
   CircularProgress,
+  CssBaseline,
   Grid,
   Paper,
   Typography,
@@ -17,6 +18,21 @@ const useStyles = makeStyles({
     maxWidth: 800,
   },
 });
+
+/*
+
+MOCK DATA
+= = = = = = = 
+  data: {
+    Country: [
+      {
+        _id: "3",
+        name: "Afghanistan",
+        capital: "Kabul",
+        nameTranslations: [{ value: "Afeganistão" }],
+        flag: { svgFile: "https://restcountries.eu/data/afg.svg" },
+      },
+  */
 
 const Country = (props) => {
   const { history, match } = props;
@@ -39,11 +55,10 @@ const Country = (props) => {
 
   return (
     <>
+      <CssBaseline />
       <Header title={`País: ${countryId}`} />
 
       {/* gera pagina sobre país */}
-      {/* <CountryInfo data={data} /> */}
-
       {/*  (bandeira, nome, capital, área, população e top-level domain); */}
 
       <Grid>
@@ -56,7 +71,7 @@ const Country = (props) => {
           <Typography variant="subtitle2">{translatedName}</Typography>
 
           <p>País: {name}</p>
-          <p>Capital: {capital ? capital : "não possui"}</p>
+          <p>Capital: {capital ? capital : " "}</p>
           <p>Área: {area} km²</p>
           <p>População: {population / 1000}</p>
         </Paper>
@@ -65,7 +80,6 @@ const Country = (props) => {
       <Button variant="contained" onClick={() => history.push("/")}>
         Voltar
       </Button>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
     </>
   );
 };
