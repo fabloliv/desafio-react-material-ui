@@ -68,6 +68,7 @@ const CountryList = (props) => {
             _id: countryId,
             name,
             capital,
+            alpha3Code,
             nameTranslations: [{ value: TranslatedName }],
             flag: { svgFile },
           }) => (
@@ -92,7 +93,7 @@ const CountryList = (props) => {
                       component="span"
                       className={classes.countryAlpha}
                     >
-                      AFX
+                      {alpha3Code}
                     </Typography>
                     <Typography
                       className={classes.countryName}

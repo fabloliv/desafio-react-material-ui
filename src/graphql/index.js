@@ -6,6 +6,7 @@ export const GET_ALL_COUNTRIES = gql`
       _id
       name
       capital
+      alpha3Code
       nameTranslations(filter: { languageCode: "br" }) {
         value
       }
